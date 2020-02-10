@@ -1,0 +1,55 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Sprites/Abilities.tres" type="SpriteFrames" id=1]
+
+[node name="HUD" type="CanvasLayer"]
+
+[node name="HP_Box" type="ColorRect" parent="."]
+margin_right = 40.0
+margin_bottom = 20.0
+color = Color( 1, 0, 0, 1 )
+
+[node name="HP_Text" type="Label" parent="."]
+margin_right = 48.0
+margin_bottom = 20.0
+text = "HP: "
+valign = 1
+
+[node name="MANA_Box" type="ColorRect" parent="."]
+margin_top = 20.0
+margin_right = 40.0
+margin_bottom = 40.0
+color = Color( 0, 0, 1, 1 )
+
+[node name="MANA_Text" type="Label" parent="."]
+margin_top = 20.0
+margin_right = 40.0
+margin_bottom = 40.0
+text = "MANA: "
+valign = 1
+
+[node name="Abilities" type="ColorRect" parent="."]
+margin_top = 40.0
+margin_right = 40.0
+margin_bottom = 80.0
+color = Color( 0.192157, 0.192157, 0.192157, 1 )
+
+[node name="Ability1" type="AnimatedSprite" parent="Abilities"]
+position = Vector2( 10, 10 )
+frames = ExtResource( 1 )
+animation = "None"
+
+[node name="Ability2" type="AnimatedSprite" parent="Abilities"]
+position = Vector2( 30, 10 )
+frames = ExtResource( 1 )
+animation = "None"
+
+[node name="Passive1" type="AnimatedSprite" parent="Abilities"]
+position = Vector2( 10, 30 )
+frames = ExtResource( 1 )
+animation = "None"
+
+[node name="Passive2" type="AnimatedSprite" parent="Abilities"]
+position = Vector2( 30, 30 )
+frames = ExtResource( 1 )
+animation = "None"
