@@ -1,10 +1,11 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Level.gd" type="Script" id=1]
 [ext_resource path="res://Jungle.tres" type="TileSet" id=2]
 [ext_resource path="res://Objects/Player.tscn" type="PackedScene" id=3]
 [ext_resource path="res://HUD.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Objects/Item.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Objects/Exit_Portal.tscn" type="PackedScene" id=6]
 
 [sub_resource type="GDScript" id=1]
 script/source = "extends Node
@@ -52,3 +53,6 @@ position = Vector2( 364.413, 266.999 )
 
 [node name="Item" parent="." instance=ExtResource( 5 )]
 position = Vector2( 472.869, 254.916 )
+
+[node name="Exit_Portal" parent="." instance=ExtResource( 6 )]
+position = Vector2( 569, 255 )

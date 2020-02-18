@@ -1,5 +1,7 @@
 extends Node2D
 
+const MENU = preload("res://PauseMenu.tscn")
+
 var level = 0
 var temple = false
 
@@ -8,7 +10,8 @@ func _ready():
 
 func _process(delta):
 	if Input.is_action_pressed("ui_cancel") and !$Player.no_death:
-		$Player.die()
+		var menu = MENU.instance()
+		add_child(menu)
 
 func save_data():
 	print("Saved")

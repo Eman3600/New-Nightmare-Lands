@@ -183,7 +183,7 @@ func dash():
 	mana_regen = 30
 
 func down_burst():
-	var DOWN_BURST_SPEED = -10
+	var DOWN_BURST_SPEED = 10
 	
 	var down_burst = DOWN_BURST.instance()
 	get_parent().add_child(down_burst)
