@@ -1,14 +1,15 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Level.gd" type="Script" id=1]
 [ext_resource path="res://Jungle.tres" type="TileSet" id=2]
 [ext_resource path="res://Objects/Player.tscn" type="PackedScene" id=3]
 [ext_resource path="res://HUD.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Objects/Item.tscn" type="PackedScene" id=5]
 
 [sub_resource type="GDScript" id=1]
 script/source = "extends Node
 
-const DECIDE = preload(\"res://Level_Decide.tscn\")
+const MENU = preload(\"res://ExitMenu.tscn\")
 
 onready var root = get_parent()
 onready var player = root.get_node(\"Player\")
@@ -17,13 +18,12 @@ onready var camera = player.get_node(\"Camera2D\")
 func leave():
 	player.leaving = true
 	
-	root.temple = false
+	root.temple = true
 	root.level += 1
 	root.save_data()
 	
-	var decide = DECIDE.instance()
-	add_child(decide)
-	decide.decide_location()
+	var menu = MENU.instance()
+	get_parent().add_child(menu)
 
 func _ready():
 	var CAMERA_X = 2
@@ -49,3 +49,6 @@ tile_data = PoolIntArray( 524296, 1, 0, 524297, 2, 0, 524298, 2, 0, 524299, 2, 0
 position = Vector2( 364.413, 266.999 )
 
 [node name="HUD" parent="." instance=ExtResource( 4 )]
+
+[node name="Item" parent="." instance=ExtResource( 5 )]
+position = Vector2( 472.869, 254.916 )

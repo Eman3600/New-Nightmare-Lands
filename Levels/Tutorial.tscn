@@ -12,7 +12,7 @@
 [sub_resource type="GDScript" id=1]
 script/source = "extends Node
 
-const DECIDE = preload(\"res://Level_Decide.tscn\")
+const MENU = preload(\"res://ExitMenu.tscn\")
 
 onready var root = get_parent()
 onready var player = root.get_node(\"Player\")
@@ -25,9 +25,8 @@ func leave():
 	root.level = 1
 	root.save_data()
 	
-	var decide = DECIDE.instance()
-	add_child(decide)
-	decide.decide_location()
+	var menu = MENU.instance()
+	get_parent().add_child(menu)
 
 func _ready():
 	var CAMERA_X = 5

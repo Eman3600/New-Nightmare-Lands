@@ -11,6 +11,7 @@ func _process(delta):
 		$Player.die()
 
 func save_data():
+	print("Saved")
 	var file = File.new()
 	file.open("res://save", file.WRITE_READ)
 	file.store_var([$Player.ability_1, $Player.ability_2, $Player.passive_1, $Player.passive_2, level, temple, $Player.max_hp, $Player.hp, $Player.max_mana, $Player.mana])

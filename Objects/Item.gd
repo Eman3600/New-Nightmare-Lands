@@ -3,6 +3,7 @@ extends Area2D
 const DASH = preload("res://Objects/Items/Dash.tscn")
 const LIGHT = preload("res://Objects/Items/Light.tscn")
 const FAST = preload("res://Objects/Items/Fast.tscn")
+const DOWN_BURST = preload("res://Objects/Items/DownBurst.tscn")
 
 onready var create_item = true
 
@@ -22,9 +23,11 @@ func new_item():
 
 func new_ability():
 	var new_item
-	var item = int(stepify(rand_range(1, 1), 1))
+	var item = int(stepify(rand_range(1, 2), 1))
 	if item == 1:
 		new_item = DASH.instance()
+	elif item == 2:
+		new_item = DOWN_BURST.instance()
 	
 	get_parent().add_child(new_item)
 	

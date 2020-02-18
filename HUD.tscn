@@ -37,19 +37,19 @@ color = Color( 0.192157, 0.192157, 0.192157, 1 )
 [node name="Ability1" type="AnimatedSprite" parent="Abilities"]
 position = Vector2( 10, 10 )
 frames = ExtResource( 1 )
-animation = "None"
+animation = "DownBurst"
 
 [node name="Ability2" type="AnimatedSprite" parent="Abilities"]
 position = Vector2( 30, 10 )
 frames = ExtResource( 1 )
-animation = "None"
+animation = "DownBurst"
 
 [node name="Passive1" type="AnimatedSprite" parent="Abilities"]
 position = Vector2( 10, 30 )
 frames = ExtResource( 1 )
-animation = "None"
+animation = "DownBurst"
 
 [node name="Passive2" type="AnimatedSprite" parent="Abilities"]
 position = Vector2( 30, 30 )
 frames = ExtResource( 1 )
-animation = "None"
+animation = "DownBurst"

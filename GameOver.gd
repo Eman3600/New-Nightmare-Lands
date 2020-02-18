@@ -22,6 +22,11 @@ func load_icons():
 	if ability_2 == 1:
 		$Options/Ability2/AnimatedSprite.play("Dash")
 	
+	if ability_1 == 2:
+		$Options/Ability1/AnimatedSprite.play("DownBurst")
+	if ability_2 == 2:
+		$Options/Ability2/AnimatedSprite.play("DownBurst")
+	
 	if passive_1 == 1:
 		$Options/Passive1/AnimatedSprite.play("Light")
 	if passive_2 == 1:

@@ -8,8 +8,9 @@ func decide_location():
 	var level = data[4]
 	var temple = data[5]
 	
-	if temple:
+	if temple and level > 1:
 		get_tree().change_scene("res://Levels/Temple.tscn")
 	else:
+		temple = false
 		if level == 1:
 			get_tree().change_scene("res://Levels/1.tscn")

@@ -1,0 +1,48 @@
+[gd_scene load_steps=2 format=2]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends CanvasLayer
+
+const DECIDE = preload(\"res://Level_Decide.tscn\")
+
+func _ready():
+	get_tree().paused = true
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+#func _process(delta):
+#	pass
+
+
+func _on_Next_pressed():
+	get_tree().paused = false
+	
+	var decide = DECIDE.instance()
+	get_parent().add_child(decide)
+	decide.decide_location()
+
+
+func _on_Quit_pressed():
+	get_tree().paused = false
+	
+	get_tree().change_scene(\"res://TitleScreen.tscn\")
+"
+
+[node name="ExitMenu" type="CanvasLayer"]
+pause_mode = 2
+script = SubResource( 1 )
+
+[node name="Next" type="Button" parent="."]
+margin_left = 270.0
+margin_top = 150.0
+margin_right = 370.0
+margin_bottom = 170.0
+text = "Next Level"
+
+[node name="Quit" type="Button" parent="."]
+margin_left = 270.0
+margin_top = 190.0
+margin_right = 370.0
+margin_bottom = 210.0
+text = "Save & Quit"
+[connection signal="pressed" from="Next" to="." method="_on_Next_pressed"]
+[connection signal="pressed" from="Quit" to="." method="_on_Quit_pressed"]

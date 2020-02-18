@@ -2,7 +2,7 @@ extends KinematicBody2D
 
 # Import Nodes
 
-
+const DOWN_BURST = preload("res://Objects/Weapons/DownBurst.tscn")
 
 # Physics Constants
 
@@ -47,6 +47,7 @@ var max_hp = 20
 var hp = max_hp
 var max_mana = 20
 var mana = max_mana
+var mana_regen = 30
 var max_i_frames = 60
 var i_frames = 0
 var flicker = false
@@ -77,7 +78,7 @@ func die():
 				get_parent().save_data()
 				get_tree().change_scene("res://GameOver.tscn")
 			else:
-				leaving = false
+				leaving = true
 				get_node("../Base").leave()
 		else:
 			get_tree().reload_current_scene()
@@ -85,6 +86,8 @@ func die():
 # Reload Icons
 
 func reload_icons():
+	Engine.time_scale = 1
+	
 	gravity = GRAVITY
 	acceleration = ACCELERATION
 	run_speed = RUN_SPEED
@@ -96,11 +99,16 @@ func reload_icons():
 		ability_1_icon.play("None")
 	if ability_2 == 0:
 		ability_2_icon.play("None")
-		
+	
 	if ability_1 == 1:
 		ability_1_icon.play("Dash")
 	if ability_2 == 1:
 		ability_2_icon.play("Dash")
+	
+	if ability_1 == 2:
+		ability_1_icon.play("DownBurst")
+	if ability_2 == 2:
+		ability_2_icon.play("DownBurst")
 	
 	
 	if passive_1 == 0:
@@ -118,15 +126,11 @@ func reload_icons():
 	
 	if passive_1 == 2:
 		passive_1_icon.play("Fast")
-		run_speed *= 1.25
-		gravity *= 1.25
-		jump_height *= 1.25
+		Engine.time_scale = 1.5
 	if passive_2 == 2:
 		passive_2_icon.play("Fast")
 		if passive_1 != 2:
-			run_speed *= 1.25
-			gravity *= 1.25
-			jump_height *= 1.25
+			Engine.time_scale = 1.5
 
 # Ability Functions
 
@@ -147,20 +151,22 @@ func ability_able():
 		ability2c()
 
 func ability1a():
-	pass
+	if ability_1 == 2 and mana >= 1 and !is_on_floor():
+		down_burst()
 
 func ability1b():
-	if ability_1 == 1 and !used_dash and !dashing:
+	if ability_1 == 1 and !used_dash and !dashing and mana >= 5:
 		dash()
 
 func ability1c():
 	pass
 
 func ability2a():
-	pass
+	if ability_2 == 2 and mana >= 1 and !is_on_floor():
+		down_burst()
 
 func ability2b():
-	if ability_2 == 1 and !used_dash and !dashing:
+	if ability_2 == 1 and !used_dash and !dashing and mana >= 5:
 		dash()
 
 func ability2c():
@@ -172,6 +178,23 @@ func dash():
 	dashing = true
 	used_dash = true
 	dash_time = 9
+	
+	mana -= 5
+	mana_regen = 30
+
+func down_burst():
+	var DOWN_BURST_SPEED = -10
+	
+	var down_burst = DOWN_BURST.instance()
+	get_parent().add_child(down_burst)
+	down_burst.global_position.x = global_position.x
+	down_burst.global_position.y = global_position.y + 10
+	
+	if motion.y > DOWN_BURST_SPEED:
+		motion.y = DOWN_BURST_SPEED
+	
+	mana -= .1
+	mana_regen = 30
 
 func motion():
 	# Walking
@@ -213,7 +236,7 @@ func motion():
 		
 		# Gravity, Animation, and Airtime Physics
 		
-		motion.y = min(motion.y + gravity, fall_speed)
+		motion.y = min(motion.y + (gravity * Engine.time_scale), fall_speed)
 		if !Input.is_action_pressed("ui_up"):
 			motion.y = max(motion.y, low_jump_height)
 		if motion.y < 0:
@@ -235,7 +258,7 @@ func _physics_process(delta):
 	# Invincibility Frames
 	
 	if i_frames > 0:
-		i_frames -= 1
+		i_frames -= Engine.time_scale
 		if !flicker:
 			flicker = true
 			$AnimatedSprite.hide()
@@ -254,14 +277,21 @@ func _physics_process(delta):
 		hp = max_hp
 	if mana > max_mana:
 		mana = max_mana
+	elif mana < max_mana:
+		mana_regen -= Engine.time_scale
+		if mana_regen <= 0:
+			mana_regen = 1
+			var mana_regen_value = float(max_mana)
+			mana_regen_value /= 500
+			mana += mana_regen_value
 	
 	# HP and Mana Display
 	
 	get_node("../HUD/HP_Box").margin_right = hp * 3
 	get_node("../HUD/MANA_Box").margin_right = mana * 3
 	
-	get_node("../HUD/HP_Text").text = "HP: " + str(hp) + "/" + str(max_hp)
-	get_node("../HUD/MANA_Text").text = "MANA: " + str(mana) + "/" + str(max_mana)
+	get_node("../HUD/HP_Text").text = "HP: " + str(int(hp)) + "/" + str(max_hp)
+	get_node("../HUD/MANA_Text").text = "MANA: " + str(int(mana)) + "/" + str(max_mana)
 	
 	# Abilities
 	
@@ -278,7 +308,7 @@ func _physics_process(delta):
 		else:
 			motion.x = -DASH_SPEED
 		motion.y = 0
-		dash_time -= 1
+		dash_time -= Engine.time_scale
 		
 		if dash_time <= 0 or is_on_wall():
 			dashing = false
