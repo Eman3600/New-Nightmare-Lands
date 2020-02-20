@@ -184,6 +184,7 @@ func dash():
 
 func down_burst():
 	var DOWN_BURST_SPEED = 10
+	var DOWN_BURST_ACCELERATION = 100
 	
 	var down_burst = DOWN_BURST.instance()
 	get_parent().add_child(down_burst)
@@ -191,7 +192,9 @@ func down_burst():
 	down_burst.global_position.y = global_position.y + 10
 	
 	if motion.y > DOWN_BURST_SPEED:
-		motion.y = DOWN_BURST_SPEED
+		motion.y -= DOWN_BURST_ACCELERATION
+		if motion.y < DOWN_BURST_SPEED:
+			motion.y = DOWN_BURST_SPEED
 	
 	mana -= .1
 	mana_regen = 30

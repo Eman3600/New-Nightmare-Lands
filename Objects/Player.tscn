@@ -41,7 +41,6 @@ animations = [ {
 extents = Vector2( 3.61409, 6.52438 )
 
 [node name="Player" type="KinematicBody2D"]
-editor/display_folded = true
 scale = Vector2( 2, 2 )
 z_index = 1
 collision/safe_margin = 3.0
@@ -64,6 +63,8 @@ current = true
 zoom = Vector2( 2, 2 )
 limit_left = 0
 limit_top = 0
+limit_smoothed = true
+smoothing_enabled = true
 
 [node name="VisibilityNotifier2D" type="VisibilityNotifier2D" parent="."]
 
