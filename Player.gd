@@ -121,16 +121,14 @@ func reload_icons():
 		gravity /= 2
 	if passive_2 == 1:
 		passive_2_icon.play("Light")
-		if passive_1 != 1:
-			gravity /= 2
+		gravity /= 2
 	
 	if passive_1 == 2:
 		passive_1_icon.play("Fast")
-		Engine.time_scale = 1.5
+		Engine.time_scale *= 1.5
 	if passive_2 == 2:
 		passive_2_icon.play("Fast")
-		if passive_1 != 2:
-			Engine.time_scale = 1.5
+		Engine.time_scale *= 1.5
 
 # Ability Functions
 
