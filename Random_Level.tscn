@@ -1,0 +1,63 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://Jungle.tres" type="TileSet" id=1]
+[ext_resource path="res://Level.gd" type="Script" id=2]
+[ext_resource path="res://Objects/Exit_Portal.tscn" type="PackedScene" id=3]
+[ext_resource path="res://HUD.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Objects/Player.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Objects/Platform.tscn" type="PackedScene" id=6]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends Node
+
+const MENU = preload(\"res://ExitMenu.tscn\")
+
+onready var root = get_parent()
+onready var player = root.get_node(\"Player\")
+onready var camera = player.get_node(\"Camera2D\")
+
+func leave():
+	player.leaving = true
+	
+	root.temple = true
+	root.level += 1
+	root.save_data()
+	
+	var menu = MENU.instance()
+	get_parent().add_child(menu)
+
+func _ready():
+	var CAMERA_X = 2
+	var CAMERA_Y = 2
+	
+	camera.limit_bottom = 720 * CAMERA_Y
+	camera.limit_right = 1280 * CAMERA_X
+"
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_horizontal_guides_": [  ],
+"_edit_vertical_guides_": [  ]
+}
+
+[node name="Base" type="Node" parent="."]
+script = SubResource( 1 )
+
+[node name="TileMap" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 32, 32 )
+format = 1
+tile_data = PoolIntArray( 524296, 1, 0, 524297, 2, 0, 524298, 2, 0, 524299, 2, 0, 524300, 2, 0, 524301, 2, 0, 524302, 2, 0, 524303, 5, 0, 589832, 0, 0, 589833, 3, 0, 589834, 3, 0, 589835, 3, 0, 589836, 3, 0, 589837, 3, 0, 589838, 3, 0, 589839, 4, 0, 655368, 6, 0, 655369, 7, 0, 655370, 7, 0, 655371, 7, 0, 655372, 7, 0, 655373, 7, 0, 655374, 7, 0, 655375, 8, 0 )
+
+[node name="Player" parent="." instance=ExtResource( 5 )]
+position = Vector2( 364.413, 266.999 )
+
+[node name="HUD" parent="." instance=ExtResource( 4 )]
+
+[node name="Exit_Portal" parent="." instance=ExtResource( 3 )]
+position = Vector2( 569, 255 )
+
+[node name="Platform" parent="." instance=ExtResource( 6 )]
+position = Vector2( 393.592, 464.388 )
+size = Vector2( 3, 3 )
